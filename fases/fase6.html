@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Fase 6</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<p style="font-size: 1.3rem; font-weight: bold; margin-bottom: 8px;">Atrás do registro de gás. Você tem 1 minuto.</p>
+<p id="cronometro" style="font-size: 2rem; font-weight: bold; letter-spacing: 2px; margin: 12px 0 20px;">01:00</p>
+<button type="button" class="btn-red" onclick="window.location.href='fase2.html'">Voltar</button>
+
+<script>
+  const cronometro = document.getElementById('cronometro');
+  let tempoRestante = 60;
+
+  function formatarTempo(segundos) {
+    const minutos = String(Math.floor(segundos / 60)).padStart(2, '0');
+    const segundosRestantes = String(segundos % 60).padStart(2, '0');
+    return `${minutos}:${segundosRestantes}`;
+  }
+
+  function reiniciarEnigma() {
+    if (typeof Storage !== 'undefined') {
+      localStorage.clear();
+    }
+    window.location.href = '../index.html';
+  }
+
+  setTimeout(() => {
+    const intervalo = setInterval(() => {
+      tempoRestante -= 1;
+      cronometro.textContent = formatarTempo(tempoRestante);
+
+      if (tempoRestante <= 0) {
+        clearInterval(intervalo);
+        cronometro.textContent = '00:00';
+        setTimeout(reiniciarEnigma, 1200);
+      }
+    }, 1000);
+  }, 2000);
+</script>
+
+</body>
+</html>

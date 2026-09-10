@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Fase 1</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<button type="button" class="btn-red" onclick="window.location.href='fase3.html'">?</button>
+<button type="button" class="btn-red" onclick="window.location.href='fase4.html'">?</button>
+<button type="button" class="btn-red" onclick="window.location.href='fase5.html'">?</button>
+<button id="fase6-btn" type="button" class="btn-red" onclick="window.location.href='fase6.html'" style="display:none;">Final</button>
+
+<script src="../js/game.js"></script>
+<script>
+  function normalizar(texto) {
+    return (texto || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9\s]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function verificarFase6Disponivel() {
+    const respostasCorretas = {
+      'fase3-resposta': 'confessar crime assassinado farei vinganca',
+      'fase4-resposta': 'bianca',
+      'fase5-resposta': 'suum cuique'
+    };
+
+    const ok = Object.entries(respostasCorretas).every(([chave, correta]) => {
+      const valorSalvo = localStorage.getItem(chave);
+      return normalizar(valorSalvo) === normalizar(correta);
+    });
+
+    const botao = document.getElementById('fase6-btn');
+    if (botao) {
+      botao.style.display = ok ? 'inline-block' : 'none';
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', verificarFase6Disponivel);
+</script>
+
+</body>
+</html>
